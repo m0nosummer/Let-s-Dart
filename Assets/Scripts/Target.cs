@@ -22,9 +22,5 @@ public class Target : MonoBehaviour
 
         return true;
     }
-
-    public void OnDie()
-    {
-        
-    }
+    
 }

@@ -70,17 +70,21 @@ public class DartManager : Singleton<DartManager>
             // TODO : 카드 버튼에 정보 갱신
         }
     }
-    private void ChangeDart(int dartIdx) // 다트 버튼을 선택하여 바꾸기
-    {
-        _curDartIdx = dartIdx;
-        // TODO : 다트 선택 애니메이션
-
-    }
     private void SpawnDart(int dartType, Vector3 spawnPosition)
     {
         Vector3 position = spawnPosition + Vector3.back;
         GameObject clone = Instantiate(templateDart.darts[dartType].dartPrefab, position, Quaternion.identity);
-        clone.GetComponent<Dart>().SetUp(dartType, spawnPosition);
+        StartCoroutine(nameof(ChangeDart));
+    }
+    private IEnumerator ChangeDart(int dartIdx) // 다트 버튼을 선택하여 바꾸기
+    {
+        _curDartIdx = dartIdx;
+        // TODO : 다트 선택 애니메이션
+        yield return null;
+    }
 
+    public void DartDestroy()
+    {
+        StopCoroutine(nameof(ChangeDart));
     }
 }

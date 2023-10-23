@@ -5,6 +5,7 @@ using UnityEngine;
 public enum DartType { NormalDart = 0, Dart1, Dart2, Dart3, }
 public class Dart : MonoBehaviour
 {
+    [SerializeField] private DartManager dartManager;
     [SerializeField] private TargetManager targetManager; // 다트 충돌 시 타겟 데미지 연산
     [SerializeField] private TemplateDart templateDart; // 다트 종류 설정
     [SerializeField] private float interval; // 좌우 Point 사이 간격
@@ -16,13 +17,14 @@ public class Dart : MonoBehaviour
     private int _dartType;
     private bool _isMoving; // 다트 발사 여부 판단
 
+    public int DartType { get; set; }
     public Vector3 moveDir; // 좌우 방향
 
-    public void SetUp(int dartType, Vector3 spawnPosition)
+    public void Awake() // Game Start 버튼으로 호출됨
     {
+        _dartType = 1;
         _isMoving = true;
-        _dartType = dartType;
-        _startPoint = spawnPosition;
+        _startPoint = transform.position;
         _endPoint = _startPoint + (Vector3.right * interval);
         _moveSpeed = templateDart.darts[_dartType].moveSpeed;
         moveDir = Vector3.right;
@@ -63,6 +65,12 @@ public class Dart : MonoBehaviour
     {
         if (!collision.CompareTag("Target")) return;
         targetManager.DamageTarget(templateDart.darts[_dartType].damage, templateDart.darts[_dartType].range);
-        Destroy(gameObject); // TODO : 다트 소멸 이펙트 추가
+        OnDie(); // TODO : 다트 소멸 이펙트 추가
+    }
+
+    private void OnDie()
+    {
+        dartManager.DartDestroy();
+        Destroy(gameObject);
     }
 }
