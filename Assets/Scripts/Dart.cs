@@ -16,15 +16,15 @@ public class Dart : MonoBehaviour
     private int _dartType;
     private bool _isMoving; // 다트 발사 여부 판단
 
-    public int DartType { get; set; } // Dart Manager에서 다트 타입 설정
     public Vector3 moveDir; // 좌우 방향
 
-    private void Awake()
+    public void SetUp(int dartType, Vector3 spawnPosition)
     {
         _isMoving = true;
-        _startPoint = transform.position;
+        _dartType = dartType;
+        _startPoint = spawnPosition;
         _endPoint = _startPoint + (Vector3.right * interval);
-        _moveSpeed = templateDart.darts[_dartType].moveSpeed; // dataType 초기화
+        _moveSpeed = templateDart.darts[_dartType].moveSpeed;
         moveDir = Vector3.right;
     }
 
