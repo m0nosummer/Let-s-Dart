@@ -10,10 +10,11 @@ public class Dart : MonoBehaviour
     [SerializeField] private TemplateDart templateDart; // 다트 종류 설정
     [SerializeField] private float interval; // 좌우 Point 사이 간격
     [SerializeField] private float drag; // 좌우 운동 가속도 조절
+    [SerializeField] private float moveSpeed;
     
     private Vector3 _startPoint; // start와 end 사이의 거리는 (1 * interval)
     private Vector3 _endPoint;
-    private float _moveSpeed; // 좌우 운동 속도
+    private float _moveSpeed;
     private int _dartType;
     private bool _isMoving; // 다트 발사 여부 판단
 
@@ -26,7 +27,7 @@ public class Dart : MonoBehaviour
         _isMoving = true;
         _startPoint = transform.position;
         _endPoint = _startPoint + (Vector3.right * interval);
-        _moveSpeed = templateDart.darts[_dartType].moveSpeed;
+        _moveSpeed = moveSpeed;
         moveDir = Vector3.right;
     }
 
@@ -36,7 +37,7 @@ public class Dart : MonoBehaviour
         float distEnd = Vector3.Distance(transform.position, _endPoint);
         float minDist = Mathf.Min(distStart, distEnd);
         
-        _moveSpeed = templateDart.darts[_dartType].moveSpeed * minDist * drag; // 속도 갱신
+        _moveSpeed = moveSpeed * minDist * drag; // 속도 갱신
         if (_isMoving) transform.position += Time.deltaTime * _moveSpeed * moveDir; // 다트 발사 중이 아닐 때 좌우 왕복
         
         if (distStart <= 0.02f)

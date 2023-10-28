@@ -2,39 +2,41 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class NewBehaviourScript : MonoBehaviour
+public class InGameUI : MonoBehaviour
 {
     [SerializeField] private GameObject infoPanel;
     [SerializeField] private GameObject playPanel;
     [SerializeField] private GameObject cardsPanel;
     [SerializeField] private GameObject selectCardsPanel;
+    [SerializeField] private DartManager dartManager;
     
     private int _screenW = Screen.width;
     private int _screenH = Screen.height;
     private void Start()
     {
         selectCardsPanel.SetActive(true); // TODO : 애니메이션 추가
+        dartManager.SetDart();
     }
-    private void SetStage()
+    public void SetStage()
     {
         float dist = _screenW / 8;
     }
 
-    private void Undo()
+    public void Undo()
     {
         
     }
-    private void PauseGame()
-    {
-        
-    }
-
-    private void SelectCard()
+    public void PauseGame()
     {
         
     }
 
-    private void ShootDart()
+    public void SelectCard()
+    {
+        
+    }
+
+    public void ShootDart()
     {
         
     }

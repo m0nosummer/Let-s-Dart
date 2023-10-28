@@ -7,66 +7,71 @@ public class DartManager : Singleton<DartManager>
 {
     [SerializeField] private TemplateDart templateDart;
 
-    private GameObject[] _darts = new GameObject[5]; // 다트 덱 구성
-    private int[] _dartType = new int[5];
-    private int _allDartsCnt;
+    private const int AllDartsCnt = 20;
+    
+    private readonly GameObject[] _darts = new GameObject[5]; // 다트 덱 구성
+    private readonly int[] _dartType = new int[5];
     private int _curDartIdx = 0;
-    private bool[] _isUsedIdx = new bool[20];
-    private bool[] _isSelected = new bool[5];
-    private void SetDart() // 게임 시작 시 고정 다트 1개와 랜덤 다트 4개를 선택
+    private readonly bool[] _isUsedType = new bool[20];
+    private readonly bool[] _isSelected = new bool[5];
+    public void SetDart() // 게임 시작 시 고정 다트 1개와 랜덤 다트 4개를 선택
     {
-        _allDartsCnt = templateDart.darts.Length;
-        _darts[0] = templateDart.darts[0].dartPrefab;
+        _isUsedType[0] = true;
         _dartType[0] = 0;
+        _darts[0] = templateDart.darts[0].dartPrefab;
+        _darts[0].GetComponent<Dart>().DartType = 0;
+        _darts[0].GetComponent<SpriteRenderer>().sprite = templateDart.darts[0].sprite;
         for (int i = 1; i < 5; i++)
         {
-            int curDartIdx;
+            int curDartType;
             while (true)
             {
-                curDartIdx = Random.Range(1, _allDartsCnt);
-                if (!_isUsedIdx[curDartIdx]) break;
+                curDartType = Random.Range(1, AllDartsCnt);
+                if (!_isUsedType[curDartType]) break;
             }
-            _isUsedIdx[curDartIdx] = true;
-            _dartType[i] = curDartIdx;
-            _darts[i] = templateDart.darts[curDartIdx].dartPrefab;
+            _isUsedType[curDartType] = true;
+            _dartType[i] = curDartType;
+            _darts[i] = templateDart.darts[curDartType].dartPrefab;
+            _darts[i].GetComponent<Dart>().DartType = curDartType;
+            _darts[i].GetComponent<SpriteRenderer>().sprite = templateDart.darts[i].sprite;
         }
         // TODO : 카드 버튼에 정보 갱신
     }
- 
-    private void SelectDart(int dartIdx) // 스테이지 시작 시 다트 선택 화면에서 다트 선택 및 해제
+    public void SelectDart(int dartIdx) // 스테이지 시작 시 다트 선택 화면에서 다트 선택 및 해제
     {
         if (_isSelected[dartIdx])
         {
-            // TODO : 카드가 내려가는 애니메이션
+            // TODO : 카드 선택 해제 애니메이션
             _isSelected[dartIdx] = false;
         }
         else
         {
-            // TODO : 카드가 올라가는 애니메이션
+            // TODO : 카드 선택 애니메이션
             _isSelected[dartIdx] = true;
         }
         
     }
-    private void RerollSelectedDart() // 랜덤 다트 4개 중 선택한 다트 다시 뽑기 가능
+    public void RerollSelectedDart() // 랜덤 다트 4개 중 선택한 다트 다시 뽑기 가능
     {
         for (int i = 1; i < 5; i++)
         {
             if (!_isSelected[i]) continue;
-            int prevDartIdx = _dartType[i];
-            int curDartIdx = 0;
+            int prevDartType = _dartType[i];
+            int curDartType = 0;
             
             // TODO : 카드 리롤 애니메이션
             
             while (true)
             {
-                curDartIdx = Random.Range(1, _allDartsCnt);
-                if (!_isUsedIdx[curDartIdx]) break;
+                curDartType = Random.Range(1, AllDartsCnt);
+                if (!_isUsedType[curDartType]) break;
             }
-            _isUsedIdx[prevDartIdx] = false;
-            _isUsedIdx[curDartIdx] = true;
-            _dartType[i] = curDartIdx;
-            _darts[i] = templateDart.darts[curDartIdx].dartPrefab;
-            
+            _isUsedType[prevDartType] = false;
+            _isUsedType[curDartType] = true;
+            _dartType[i] = curDartType;
+            _darts[i] = templateDart.darts[curDartType].dartPrefab;
+            _darts[i].GetComponent<Dart>().DartType = curDartType;
+
             // TODO : 카드 버튼에 정보 갱신
         }
     }

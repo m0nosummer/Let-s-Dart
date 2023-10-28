@@ -12,8 +12,6 @@ public class TemplateDart : ScriptableObject
     {
         public GameObject dartPrefab;
         public Sprite sprite; // 다음 다트 표시 버튼에 사용
-        public float shootSpeed;
-        public float moveSpeed;
         public int damage;
         public int range;
 

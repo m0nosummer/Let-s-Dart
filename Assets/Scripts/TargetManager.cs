@@ -4,8 +4,7 @@ using UnityEngine;
 
 public class TargetManager : Singleton<TargetManager>
 {
-    [SerializeField] private Target[] targets; // target : 8개
-
+    private Target[] _targets = new Target[8]; // target : 8개
     private int _stageLevel;
 
     private void SetTargetHP() // 합 = StageLevel이 되도록 8개의 칸에 HP 배분
@@ -24,7 +23,7 @@ public class TargetManager : Singleton<TargetManager>
             
             for (int i = 0; i < tmpHP.Length; i++)
             {
-                targets[i].TargetHP = tmpHP[i];
+                _targets[i].TargetHP = tmpHP[i];
             }
         }
     }
