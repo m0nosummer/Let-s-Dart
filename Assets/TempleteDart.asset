@@ -12,15 +12,68 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5aa93a8b26997bd40aed9d8c98f18972, type: 3}
   m_Name: TempleteDart
   m_EditorClassIdentifier: 
-  dartPrefab: {fileID: 0}
   darts:
-  - sprite: {fileID: 0}
-    shootSpeed: 0
-    moveSpeed: 0
-    attackDamage: 0
-    attackRange: 0
-  - sprite: {fileID: 0}
-    shootSpeed: 0
-    moveSpeed: 0
-    attackDamage: 0
-    attackRange: 0
+  - dartPrefab: {fileID: 0}
+    sprite: {fileID: 0}
+    damage: 1
+    range: 1
+  - dartPrefab: {fileID: 0}
+    sprite: {fileID: 0}
+    damage: 3
+    range: 1
+  - dartPrefab: {fileID: 0}
+    sprite: {fileID: 0}
+    damage: 5
+    range: 1
+  - dartPrefab: {fileID: 0}
+    sprite: {fileID: 0}
+    damage: 7
+    range: 1
+  - dartPrefab: {fileID: 0}
+    sprite: {fileID: 0}
+    damage: 1
+    range: 3
+  - dartPrefab: {fileID: 0}
+    sprite: {fileID: 0}
+    damage: 2
+    range: 3
+  - dartPrefab: {fileID: 0}
+    sprite: {fileID: 0}
+    damage: 3
+    range: 3
+  - dartPrefab: {fileID: 0}
+    sprite: {fileID: 0}
+    damage: 4
+    range: 3
+  - dartPrefab: {fileID: 0}
+    sprite: {fileID: 0}
+    damage: 5
+    range: 3
+  - dartPrefab: {fileID: 0}
+    sprite: {fileID: 0}
+    damage: 1
+    range: 5
+  - dartPrefab: {fileID: 0}
+    sprite: {fileID: 0}
+    damage: 2
+    range: 5
+  - dartPrefab: {fileID: 0}
+    sprite: {fileID: 0}
+    damage: 3
+    range: 5
+  - dartPrefab: {fileID: 0}
+    sprite: {fileID: 0}
+    damage: 4
+    range: 5
+  - dartPrefab: {fileID: 0}
+    sprite: {fileID: 0}
+    damage: 1
+    range: 7
+  - dartPrefab: {fileID: 0}
+    sprite: {fileID: 0}
+    damage: 2
+    range: 7
+  - dartPrefab: {fileID: 0}
+    sprite: {fileID: 0}
+    damage: 3
+    range: 7

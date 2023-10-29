@@ -12,7 +12,7 @@ public class InGameUI : MonoBehaviour
     
     private int _screenW = Screen.width;
     private int _screenH = Screen.height;
-    private void Start()
+    private void Start() // 씬 변경 후 첫 시작
     {
         selectCardsPanel.SetActive(true); // TODO : 애니메이션 추가
         dartManager.SetDart();
