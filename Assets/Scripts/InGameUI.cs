@@ -14,8 +14,8 @@ public class InGameUI : MonoBehaviour
     private int _screenH = Screen.height;
     private void Start() // 씬 변경 후 첫 시작
     {
-        selectCardsPanel.SetActive(true); // TODO : 애니메이션 추가
-        dartManager.SetDart();
+        // selectCardsPanel.SetActive(true); // TODO : 애니메이션 추가
+        // dartManager.SetDart();
     }
     public void SetStage()
     {
@@ -27,11 +27,6 @@ public class InGameUI : MonoBehaviour
         
     }
     public void PauseGame()
-    {
-        
-    }
-
-    public void SelectCard()
     {
         
     }
