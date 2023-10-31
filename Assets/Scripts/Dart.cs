@@ -17,6 +17,8 @@ public class Dart : MonoBehaviour
     private Vector3 _endPoint;
     private float _moveSpeed;
     private int _dartType;
+    private int _dartDamage;
+    private int _dartRange;
     private bool _isMoving; // 다트 발사 여부 판단
 
     public int DartType { get; set; }
@@ -31,7 +33,13 @@ public class Dart : MonoBehaviour
         _moveSpeed = moveSpeed;
         moveDir = Vector3.right;
     }
-
+    public void Setup(int dartType, int damage, int range)
+    {
+        _dartType = dartType;
+        _dartDamage = damage;
+        _dartRange = range;
+        GetComponent<SpriteRenderer>().sprite = templateDart.darts[_dartType].sprite;
+    }
     private void Update()
     {
         float distStart = Vector3.Distance(transform.position, _startPoint);
