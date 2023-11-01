@@ -5,6 +5,7 @@ using UnityEngine;
 [CreateAssetMenu]
 public class TemplateDart : ScriptableObject
 {
+    public GameObject dartPrefab;
     public Dart[] darts;
     
     [System.Serializable]

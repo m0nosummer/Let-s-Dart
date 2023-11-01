@@ -33,11 +33,11 @@ public class Dart : MonoBehaviour
         _moveSpeed = moveSpeed;
         moveDir = Vector3.right;
     }
-    public void Setup(int dartType, int damage, int range)
+    public void Setup(int dartType) // 다트타입, 데미지, 범위, 다트이미지 초기화
     {
         _dartType = dartType;
-        _dartDamage = damage;
-        _dartRange = range;
+        _dartDamage = templateDart.darts[_dartType].damage;
+        _dartRange = templateDart.darts[_dartType].range;
         GetComponent<SpriteRenderer>().sprite = templateDart.darts[_dartType].sprite;
     }
     private void Update()

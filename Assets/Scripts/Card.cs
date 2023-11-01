@@ -14,7 +14,6 @@ public class Card : MonoBehaviour
     private Vector3 _startPos;
     private Vector3 _startScale;
     private readonly bool[] _isSelected = new bool[4];
-    private bool _canSelectOtherCard;
 
     private void Start()
     {
@@ -25,20 +24,15 @@ public class Card : MonoBehaviour
 
     public void SelectCard(int cardIdx)
     {
-        if (_isSelected[cardIdx]) // 카드 선택 해제
-        {
-            _isSelected[cardIdx] = false;
-            _rectTransform.DOLocalMoveY(-1 * moveAmount, moveTime).SetRelative();
-        }
-        else
-        {
-            for (int i = 0; i < 4; i++) // 다른 카드가 이미 선택되었을 경우 중복 선택 불가능
-            {
-                if (_isSelected[i] == true) return;
-            }
-            _isSelected[cardIdx] = true;
-            _rectTransform.DOLocalMoveY(moveAmount, moveTime).SetRelative();
-        }
+        if (_isSelected[cardIdx]) return; // 이미 선택 중인 카드는 선택 불가
+        
+        _isSelected[cardIdx] = true;
+        _rectTransform.DOLocalMoveY(moveAmount, moveTime).SetRelative();
     }
-    
+
+    public void DeselectCard(int cardIdx)
+    {
+        _isSelected[cardIdx] = false;
+        _rectTransform.DOLocalMoveY(-1 * moveAmount, moveTime).SetRelative();
+    }
 }

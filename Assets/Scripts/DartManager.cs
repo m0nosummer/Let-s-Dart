@@ -1,10 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UIElements;
+using UnityEngine.UI;
 
 public class DartManager : Singleton<DartManager>
 {
+    [SerializeField] private InGameUI inGameUI;
     [SerializeField] private TemplateDart templateDart;
     [SerializeField] private GameObject[] startCards = new GameObject[4];
 
@@ -57,15 +58,18 @@ public class DartManager : Singleton<DartManager>
             // TODO : 카드 버튼에 정보 갱신
         }
     }
-    private void SpawnDart(int dartType, Vector3 spawnPosition)
+    public void SpawnDart(int dartType, Vector3 spawnPosition)
     {
         Vector3 position = spawnPosition + Vector3.back;
+        _curDart = Instantiate(templateDart.dartPrefab, position, Quaternion.identity);
         StartCoroutine(nameof(ChangeDart));
     }
-    private IEnumerator ChangeDart(int dartIdx) // 다트 버튼을 선택하여 바꾸기
+    public IEnumerator ChangeDart(int dartIdx) // 다트 버튼을 선택하여 바꾸기
     {
+        inGameUI.inGameCardUI[_curDartIdx].GetComponent<Card>().DeselectCard(_curDartIdx);
         _curDartIdx = dartIdx;
-        // TODO : 다트 선택 애니메이션
+        inGameUI.inGameCardUI[_curDartIdx].GetComponent<Card>().SelectCard(_curDartIdx);
+        _curDart.GetComponent<Dart>().Setup(_curDartIdx);
         yield return null;
     }
 

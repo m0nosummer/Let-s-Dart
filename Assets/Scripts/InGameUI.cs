@@ -4,22 +4,28 @@ using UnityEngine;
 
 public class InGameUI : MonoBehaviour
 {
+    public GameObject[] inGameCardUI;
+    
+    [SerializeField] private TargetManager targetManager;
+    [SerializeField] private DartManager dartManager;
     [SerializeField] private GameObject infoPanel;
     [SerializeField] private GameObject playPanel;
     [SerializeField] private GameObject cardsPanel;
     [SerializeField] private GameObject selectCardsPanel;
-    [SerializeField] private DartManager dartManager;
+    [SerializeField] private Vector3 spawnPoint;
     
     private int _screenW = Screen.width;
     private int _screenH = Screen.height;
     private void Start() // 씬 변경 후 첫 시작
     {
-        // selectCardsPanel.SetActive(true); // TODO : 애니메이션 추가
-        // dartManager.SetDart();
+        selectCardsPanel.SetActive(true); // TODO : 애니메이션 추가
+        dartManager.SetDart();
     }
     public void SetStage()
     {
-        float dist = _screenW / 8;
+        selectCardsPanel.SetActive(false);
+        inGameCardUI[0].GetComponent<Card>().SelectCard(0);
+        dartManager.SpawnDart(0, spawnPoint);
     }
 
     public void Undo()

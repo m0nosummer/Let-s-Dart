@@ -12,68 +12,53 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5aa93a8b26997bd40aed9d8c98f18972, type: 3}
   m_Name: TempleteDart
   m_EditorClassIdentifier: 
+  dartPrefab: {fileID: 4100000317245200042, guid: 70e483e6305d55e42b7f1dcf4592f5f8, type: 3}
   darts:
-  - dartPrefab: {fileID: 0}
-    sprite: {fileID: 0}
+  - sprite: {fileID: 21300000, guid: 1562a82215c738e4d99868b070ad76cb, type: 3}
     damage: 1
     range: 1
-  - dartPrefab: {fileID: 0}
-    sprite: {fileID: 0}
+  - sprite: {fileID: 21300000, guid: 37b3d8d8ee835bb43b7cacee9fd06595, type: 3}
     damage: 3
     range: 1
-  - dartPrefab: {fileID: 0}
-    sprite: {fileID: 0}
+  - sprite: {fileID: 21300000, guid: 1562a82215c738e4d99868b070ad76cb, type: 3}
     damage: 5
     range: 1
-  - dartPrefab: {fileID: 0}
-    sprite: {fileID: 0}
+  - sprite: {fileID: 21300000, guid: 1562a82215c738e4d99868b070ad76cb, type: 3}
     damage: 7
     range: 1
-  - dartPrefab: {fileID: 0}
-    sprite: {fileID: 0}
+  - sprite: {fileID: 21300000, guid: 1562a82215c738e4d99868b070ad76cb, type: 3}
     damage: 1
     range: 3
-  - dartPrefab: {fileID: 0}
-    sprite: {fileID: 0}
+  - sprite: {fileID: 21300000, guid: 1562a82215c738e4d99868b070ad76cb, type: 3}
     damage: 2
     range: 3
-  - dartPrefab: {fileID: 0}
-    sprite: {fileID: 0}
+  - sprite: {fileID: 21300000, guid: 1562a82215c738e4d99868b070ad76cb, type: 3}
     damage: 3
     range: 3
-  - dartPrefab: {fileID: 0}
-    sprite: {fileID: 0}
+  - sprite: {fileID: 21300000, guid: 1562a82215c738e4d99868b070ad76cb, type: 3}
     damage: 4
     range: 3
-  - dartPrefab: {fileID: 0}
-    sprite: {fileID: 0}
+  - sprite: {fileID: 21300000, guid: 1562a82215c738e4d99868b070ad76cb, type: 3}
     damage: 5
     range: 3
-  - dartPrefab: {fileID: 0}
-    sprite: {fileID: 0}
+  - sprite: {fileID: 21300000, guid: 37b3d8d8ee835bb43b7cacee9fd06595, type: 3}
     damage: 1
     range: 5
-  - dartPrefab: {fileID: 0}
-    sprite: {fileID: 0}
+  - sprite: {fileID: 21300000, guid: 37b3d8d8ee835bb43b7cacee9fd06595, type: 3}
     damage: 2
     range: 5
-  - dartPrefab: {fileID: 0}
-    sprite: {fileID: 0}
-    damage: 3
+  - sprite: {fileID: 21300000, guid: 37b3d8d8ee835bb43b7cacee9fd06595, type: 3}
+    damage: 6
     range: 5
-  - dartPrefab: {fileID: 0}
-    sprite: {fileID: 0}
+  - sprite: {fileID: 21300000, guid: 37b3d8d8ee835bb43b7cacee9fd06595, type: 3}
     damage: 4
     range: 5
-  - dartPrefab: {fileID: 0}
-    sprite: {fileID: 0}
+  - sprite: {fileID: 21300000, guid: 37b3d8d8ee835bb43b7cacee9fd06595, type: 3}
     damage: 1
     range: 7
-  - dartPrefab: {fileID: 0}
-    sprite: {fileID: 0}
+  - sprite: {fileID: 21300000, guid: 37b3d8d8ee835bb43b7cacee9fd06595, type: 3}
     damage: 2
     range: 7
-  - dartPrefab: {fileID: 0}
-    sprite: {fileID: 0}
+  - sprite: {fileID: 21300000, guid: 37b3d8d8ee835bb43b7cacee9fd06595, type: 3}
     damage: 3
     range: 7

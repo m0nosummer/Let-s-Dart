@@ -10,9 +10,9 @@ GameObject:
   m_Component:
   - component: {fileID: 2985564335798622447}
   - component: {fileID: 8120348518283168654}
+  - component: {fileID: 4501628537487413871}
   - component: {fileID: 2498909151656976325}
   - component: {fileID: 5027986073056578736}
-  - component: {fileID: 4501628537487413871}
   m_Layer: 0
   m_Name: Dart
   m_TagString: Untagged
@@ -87,6 +87,25 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &4501628537487413871
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4100000317245200042}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a18efa813cbab4a48893ecdb64868e9f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dartManager: {fileID: 0}
+  targetManager: {fileID: 0}
+  templateDart: {fileID: 11400000, guid: 9c50b9a5f3ac69c40a0ef1e3a984c95a, type: 2}
+  interval: 5
+  drag: 5
+  moveSpeed: 5
+  moveDir: {x: 1, y: 0, z: 0}
 --- !u!50 &2498909151656976325
 Rigidbody2D:
   serializedVersion: 4
@@ -149,22 +168,3 @@ CapsuleCollider2D:
   m_Offset: {x: 0, y: 0}
   m_Size: {x: 1, y: 1}
   m_Direction: 0
---- !u!114 &4501628537487413871
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4100000317245200042}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a18efa813cbab4a48893ecdb64868e9f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  dartManager: {fileID: 0}
-  targetManager: {fileID: 0}
-  templateDart: {fileID: 11400000, guid: 9c50b9a5f3ac69c40a0ef1e3a984c95a, type: 2}
-  interval: 5
-  drag: 5
-  moveSpeed: 5
-  moveDir: {x: 1, y: 0, z: 0}
