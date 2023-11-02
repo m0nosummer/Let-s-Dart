@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using DG.Tweening;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -8,14 +9,16 @@ public class DartManager : Singleton<DartManager>
     [SerializeField] private InGameUI inGameUI;
     [SerializeField] private TemplateDart templateDart;
     [SerializeField] private GameObject[] startCards = new GameObject[4];
+    [SerializeField] private GameObject[] inGameCards = new GameObject[4];
 
-    private const int AllDartsCnt = 20;
+    private const int AllDartsCnt = 16;
 
     private GameObject _curDart; 
     private readonly int[] _dartType = new int[4];
     private int _curDartIdx = 0;
-    private readonly bool[] _isUsedType = new bool[20];
+    private readonly bool[] _isUsedType = new bool[16];
     private readonly bool[] _isSelected = new bool[4];
+    private bool _isRerolled;
     public void SetDart() // 게임 시작 시 고정 다트 1개와 랜덤 다트 4개를 선택
     {
         _isUsedType[0] = true;
@@ -31,12 +34,28 @@ public class DartManager : Singleton<DartManager>
             }
             _isUsedType[curDartType] = true;
             _dartType[i] = curDartType;
-            startCards[i].GetComponent<Image>().sprite = templateDart.darts[i].sprite;
+            startCards[i].GetComponent<Image>().sprite = templateDart.darts[curDartType].sprite;
         }
-        // TODO : 카드 버튼에 정보 갱신
+    }
+    public void SelectCardToReroll(int selectIdx)
+    {
+        RectTransform rectTransform = startCards[selectIdx].GetComponent<RectTransform>();
+        if (selectIdx == 0 || _isRerolled == true) return;
+        if (_isSelected[selectIdx])
+        {
+            _isSelected[selectIdx] = false;
+            rectTransform.DOLocalMoveY(-50f, 0.1f).SetRelative();
+        }
+        else
+        {
+            _isSelected[selectIdx] = true;
+            rectTransform.DOLocalMoveY(50f, 0.1f).SetRelative();
+        }
     }
     public void RerollSelectedDart() // 랜덤 다트 4개 중 선택한 다트 다시 뽑기 가능
     {
+        if (_isRerolled) return;
+        _isRerolled = true;
         for (int i = 1; i < 4; i++)
         {
             if (!_isSelected[i]) continue;
@@ -53,7 +72,7 @@ public class DartManager : Singleton<DartManager>
             _isUsedType[prevDartType] = false;
             _isUsedType[curDartType] = true;
             _dartType[i] = curDartType;
-            startCards[i].GetComponent<Image>().sprite = templateDart.darts[i].sprite;
+            startCards[i].GetComponent<Image>().sprite = templateDart.darts[curDartType].sprite;
 
             // TODO : 카드 버튼에 정보 갱신
         }
@@ -62,10 +81,20 @@ public class DartManager : Singleton<DartManager>
     {
         Vector3 position = spawnPosition + Vector3.back;
         _curDart = Instantiate(templateDart.dartPrefab, position, Quaternion.identity);
-        StartCoroutine(nameof(ChangeDart));
+        
     }
-    public IEnumerator ChangeDart(int dartIdx) // 다트 버튼을 선택하여 바꾸기
+
+    public void SetCards()
     {
+        
+    }
+    public void OnClickChangeDart(int dartType)
+    {
+        StartCoroutine(ChangeDart(dartType));
+    }
+    private IEnumerator ChangeDart(int dartIdx) // 다트 버튼을 선택하여 바꾸기
+    {
+        
         inGameUI.inGameCardUI[_curDartIdx].GetComponent<Card>().DeselectCard(_curDartIdx);
         _curDartIdx = dartIdx;
         inGameUI.inGameCardUI[_curDartIdx].GetComponent<Card>().SelectCard(_curDartIdx);

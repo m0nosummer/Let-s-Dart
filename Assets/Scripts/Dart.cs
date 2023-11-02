@@ -20,6 +20,7 @@ public class Dart : MonoBehaviour
     private int _dartDamage;
     private int _dartRange;
     private bool _isMoving; // 다트 발사 여부 판단
+    private Sprite _dartImage;
 
     public int DartType { get; set; }
     public Vector3 moveDir; // 좌우 방향
@@ -32,13 +33,14 @@ public class Dart : MonoBehaviour
         _endPoint = _startPoint + (Vector3.right * interval);
         _moveSpeed = moveSpeed;
         moveDir = Vector3.right;
+        _dartImage = GetComponent<SpriteRenderer>().sprite; 
     }
     public void Setup(int dartType) // 다트타입, 데미지, 범위, 다트이미지 초기화
     {
         _dartType = dartType;
         _dartDamage = templateDart.darts[_dartType].damage;
         _dartRange = templateDart.darts[_dartType].range;
-        GetComponent<SpriteRenderer>().sprite = templateDart.darts[_dartType].sprite;
+        _dartImage = templateDart.darts[_dartType].sprite;
     }
     private void Update()
     {

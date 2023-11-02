@@ -20,45 +20,45 @@ MonoBehaviour:
   - sprite: {fileID: 21300000, guid: 37b3d8d8ee835bb43b7cacee9fd06595, type: 3}
     damage: 3
     range: 1
-  - sprite: {fileID: 21300000, guid: 1562a82215c738e4d99868b070ad76cb, type: 3}
+  - sprite: {fileID: 21300000, guid: b915b5f9f787c2d4b8991de7ec5f156c, type: 3}
     damage: 5
     range: 1
-  - sprite: {fileID: 21300000, guid: 1562a82215c738e4d99868b070ad76cb, type: 3}
+  - sprite: {fileID: 21300000, guid: 28c8bdfde29fc044fbf2cbe1e3d6e40a, type: 3}
     damage: 7
     range: 1
-  - sprite: {fileID: 21300000, guid: 1562a82215c738e4d99868b070ad76cb, type: 3}
+  - sprite: {fileID: 21300000, guid: 8d9e56bbfeb0bfa49bf760b5d3c9cc10, type: 3}
     damage: 1
     range: 3
-  - sprite: {fileID: 21300000, guid: 1562a82215c738e4d99868b070ad76cb, type: 3}
+  - sprite: {fileID: 21300000, guid: 4dbe74529a3815f44b32a65e3b30ced5, type: 3}
     damage: 2
     range: 3
-  - sprite: {fileID: 21300000, guid: 1562a82215c738e4d99868b070ad76cb, type: 3}
+  - sprite: {fileID: 21300000, guid: 417700d09d6778548bb3975d7e47cde3, type: 3}
     damage: 3
     range: 3
-  - sprite: {fileID: 21300000, guid: 1562a82215c738e4d99868b070ad76cb, type: 3}
+  - sprite: {fileID: 21300000, guid: f3dbf780f1b22b247a5079173a7c367b, type: 3}
     damage: 4
     range: 3
-  - sprite: {fileID: 21300000, guid: 1562a82215c738e4d99868b070ad76cb, type: 3}
+  - sprite: {fileID: 21300000, guid: 87d8877bbededbb40a7d25adb3382d81, type: 3}
     damage: 5
     range: 3
-  - sprite: {fileID: 21300000, guid: 37b3d8d8ee835bb43b7cacee9fd06595, type: 3}
+  - sprite: {fileID: 21300000, guid: 4cf884609b434824a9204d92d7c80fd6, type: 3}
     damage: 1
     range: 5
-  - sprite: {fileID: 21300000, guid: 37b3d8d8ee835bb43b7cacee9fd06595, type: 3}
+  - sprite: {fileID: 21300000, guid: 4efce61f01b9f0242b235001afbb8a5d, type: 3}
     damage: 2
     range: 5
-  - sprite: {fileID: 21300000, guid: 37b3d8d8ee835bb43b7cacee9fd06595, type: 3}
+  - sprite: {fileID: 21300000, guid: 4bfd14d8c5fba474fb389683646dc251, type: 3}
     damage: 6
     range: 5
-  - sprite: {fileID: 21300000, guid: 37b3d8d8ee835bb43b7cacee9fd06595, type: 3}
+  - sprite: {fileID: 21300000, guid: f013d1f5e7e6ebb4cacaceab678b1d64, type: 3}
     damage: 4
     range: 5
-  - sprite: {fileID: 21300000, guid: 37b3d8d8ee835bb43b7cacee9fd06595, type: 3}
+  - sprite: {fileID: 21300000, guid: e48e3ae9523fa4e4a8e227a13f05f724, type: 3}
     damage: 1
     range: 7
-  - sprite: {fileID: 21300000, guid: 37b3d8d8ee835bb43b7cacee9fd06595, type: 3}
+  - sprite: {fileID: 21300000, guid: 0eabf793581cd9141988b560200a2cf4, type: 3}
     damage: 2
     range: 7
-  - sprite: {fileID: 21300000, guid: 37b3d8d8ee835bb43b7cacee9fd06595, type: 3}
+  - sprite: {fileID: 21300000, guid: bc6485d8b9fc3c74ca6d7a86830094d4, type: 3}
     damage: 3
     range: 7
