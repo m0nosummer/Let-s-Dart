@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class InGameUI : MonoBehaviour
 {
-    public GameObject[] inGameCardUI;
+    public GameObject[] startCards;
+    public GameObject[] inGameCards;
     
     [SerializeField] private TargetManager targetManager;
     [SerializeField] private DartManager dartManager;
@@ -19,12 +20,13 @@ public class InGameUI : MonoBehaviour
     private void Start() // 씬 변경 후 첫 시작
     {
         selectCardsPanel.SetActive(true); // TODO : 애니메이션 추가
-        dartManager.SetDart();
+        dartManager.SetStartCards();
     }
     public void SetStage()
     {
         selectCardsPanel.SetActive(false);
-        inGameCardUI[0].GetComponent<Card>().SelectCard(0);
+        dartManager.SetInGameCards();
+        inGameCards[0].GetComponent<Card>().SelectCard();
         dartManager.SpawnDart(0, spawnPoint);
     }
 

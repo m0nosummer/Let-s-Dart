@@ -159,6 +159,11 @@ MonoBehaviour:
   - {fileID: 1331776446}
   - {fileID: 1081858307}
   - {fileID: 410453979}
+  inGameCards:
+  - {fileID: 817398384}
+  - {fileID: 2027499897}
+  - {fileID: 1385702117}
+  - {fileID: 32313503}
 --- !u!4 &24230692
 Transform:
   m_ObjectHideFlags: 0

@@ -13,7 +13,7 @@ public class Card : MonoBehaviour
     private RectTransform _rectTransform;
     private Vector3 _startPos;
     private Vector3 _startScale;
-    private readonly bool[] _isSelected = new bool[4];
+    private bool _isSelected;
 
     private void Start()
     {
@@ -22,17 +22,16 @@ public class Card : MonoBehaviour
         _startScale = _rectTransform.localScale;
     }
 
-    public void SelectCard(int cardIdx)
+    public void SelectCard()
     {
-        if (_isSelected[cardIdx]) return; // 이미 선택 중인 카드는 선택 불가
-        
-        _isSelected[cardIdx] = true;
+        if (_isSelected) return; // 이미 선택 중인 카드는 선택 불가
+        _isSelected = true;
         _rectTransform.DOLocalMoveY(moveAmount, moveTime).SetRelative();
     }
 
-    public void DeselectCard(int cardIdx)
+    public void DeselectCard()
     {
-        _isSelected[cardIdx] = false;
+        _isSelected = false;
         _rectTransform.DOLocalMoveY(-1 * moveAmount, moveTime).SetRelative();
     }
 }

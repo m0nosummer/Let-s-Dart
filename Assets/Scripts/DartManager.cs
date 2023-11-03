@@ -1,29 +1,39 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
 using UnityEngine;
 using UnityEngine.UI;
+using Random = UnityEngine.Random;
 
 public class DartManager : Singleton<DartManager>
 {
     [SerializeField] private InGameUI inGameUI;
     [SerializeField] private TemplateDart templateDart;
-    [SerializeField] private GameObject[] startCards = new GameObject[4];
-    [SerializeField] private GameObject[] inGameCards = new GameObject[4];
 
     private const int AllDartsCnt = 16;
 
-    private GameObject _curDart; 
-    private readonly int[] _dartType = new int[4];
+    private GameObject _curDart;
+    private Card[] _inGameCardComponent = new Card[4];
+    private int[] _dartType = new int[4];
     private int _curDartIdx = 0;
-    private readonly bool[] _isUsedType = new bool[16];
-    private readonly bool[] _isSelected = new bool[4];
+    private bool[] _isUsedType = new bool[16];
+    private bool[] _isSelected = new bool[4];
     private bool _isRerolled;
-    public void SetDart() // 게임 시작 시 고정 다트 1개와 랜덤 다트 4개를 선택
+
+    private void Awake()
+    {
+        for (int i = 0; i < 4; i++)
+        {
+            _inGameCardComponent[i] = inGameUI.inGameCards[i].GetComponent<Card>();
+        }
+    }
+
+    public void SetStartCards() // 게임 시작 시 고정 다트 1개와 랜덤 다트 4개를 선택
     {
         _isUsedType[0] = true;
         _dartType[0] = 0;
-        startCards[0].GetComponent<Image>().sprite = templateDart.darts[0].sprite;
+        inGameUI.startCards[0].GetComponent<Image>().sprite = templateDart.darts[0].sprite;
         for (int i = 1; i < 4; i++)
         {
             int curDartType;
@@ -34,12 +44,20 @@ public class DartManager : Singleton<DartManager>
             }
             _isUsedType[curDartType] = true;
             _dartType[i] = curDartType;
-            startCards[i].GetComponent<Image>().sprite = templateDart.darts[curDartType].sprite;
+            inGameUI.startCards[i].GetComponent<Image>().sprite = templateDart.darts[curDartType].sprite;
+        }
+    }
+    public void SetInGameCards()
+    {
+        for (int i = 0; i < 4; i++)
+        {
+            inGameUI.inGameCards[i].GetComponent<Image>().sprite = templateDart.darts[_dartType[i]].sprite;
+
         }
     }
     public void SelectCardToReroll(int selectIdx)
     {
-        RectTransform rectTransform = startCards[selectIdx].GetComponent<RectTransform>();
+        RectTransform rectTransform = inGameUI.startCards[selectIdx].GetComponent<RectTransform>();
         if (selectIdx == 0 || _isRerolled == true) return;
         if (_isSelected[selectIdx])
         {
@@ -72,7 +90,7 @@ public class DartManager : Singleton<DartManager>
             _isUsedType[prevDartType] = false;
             _isUsedType[curDartType] = true;
             _dartType[i] = curDartType;
-            startCards[i].GetComponent<Image>().sprite = templateDart.darts[curDartType].sprite;
+            inGameUI.startCards[i].GetComponent<Image>().sprite = templateDart.darts[curDartType].sprite;
 
             // TODO : 카드 버튼에 정보 갱신
         }
@@ -83,23 +101,18 @@ public class DartManager : Singleton<DartManager>
         _curDart = Instantiate(templateDart.dartPrefab, position, Quaternion.identity);
         
     }
-
-    public void SetCards()
+    public void OnClickChangeDart(int dartIdx)
+    {
+        StartCoroutine(ChangeDart(dartIdx));
+    }
+    public IEnumerator ChangeDart(int dartIdx) // 다트 버튼을 선택하여 바꾸기
     {
         
-    }
-    public void OnClickChangeDart(int dartType)
-    {
-        StartCoroutine(ChangeDart(dartType));
-    }
-    private IEnumerator ChangeDart(int dartIdx) // 다트 버튼을 선택하여 바꾸기
-    {
-        
-        inGameUI.inGameCardUI[_curDartIdx].GetComponent<Card>().DeselectCard(_curDartIdx);
+        _inGameCardComponent[_curDartIdx].DeselectCard();
         _curDartIdx = dartIdx;
-        inGameUI.inGameCardUI[_curDartIdx].GetComponent<Card>().SelectCard(_curDartIdx);
+        _inGameCardComponent[_curDartIdx].SelectCard();
         _curDart.GetComponent<Dart>().Setup(_curDartIdx);
-        yield return null;
+        yield break;
     }
 
     public void DartDestroy()
