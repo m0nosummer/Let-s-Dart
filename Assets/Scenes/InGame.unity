@@ -154,16 +154,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   inGameUI: {fileID: 415599815}
   templateDart: {fileID: 11400000, guid: 9c50b9a5f3ac69c40a0ef1e3a984c95a, type: 2}
-  startCards:
-  - {fileID: 343794607}
-  - {fileID: 1331776446}
-  - {fileID: 1081858307}
-  - {fileID: 410453979}
-  inGameCards:
-  - {fileID: 817398384}
-  - {fileID: 2027499897}
-  - {fileID: 1385702117}
-  - {fileID: 32313503}
 --- !u!4 &24230692
 Transform:
   m_ObjectHideFlags: 0
@@ -262,7 +252,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 32313506}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 24230691}
+        m_TargetAssemblyTypeName: DartManager, Assembly-CSharp
+        m_MethodName: OnClickChangeDart
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 3
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &32313506
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1527,7 +1529,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1cf56fe52e348f3438fd024a189c9e81, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  inGameCardUI:
+  startCards:
+  - {fileID: 343794607}
+  - {fileID: 1331776446}
+  - {fileID: 1081858307}
+  - {fileID: 410453979}
+  inGameCards:
   - {fileID: 817398384}
   - {fileID: 2027499897}
   - {fileID: 1385702117}
@@ -2178,13 +2185,13 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 24230690}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: 
-        m_Mode: 1
+      - m_Target: {fileID: 24230691}
+        m_TargetAssemblyTypeName: DartManager, Assembly-CSharp
+        m_MethodName: OnClickChangeDart
+        m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: 
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -3287,7 +3294,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1385702120}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 24230691}
+        m_TargetAssemblyTypeName: DartManager, Assembly-CSharp
+        m_MethodName: OnClickChangeDart
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 2
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1385702120
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3692,7 +3711,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2027499900}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 24230691}
+        m_TargetAssemblyTypeName: DartManager, Assembly-CSharp
+        m_MethodName: OnClickChangeDart
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 1
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &2027499900
 MonoBehaviour:
   m_ObjectHideFlags: 0

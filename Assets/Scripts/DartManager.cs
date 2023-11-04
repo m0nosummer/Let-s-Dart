@@ -108,6 +108,8 @@ public class DartManager : Singleton<DartManager>
     public IEnumerator ChangeDart(int dartIdx) // 다트 버튼을 선택하여 바꾸기
     {
         
+        if (_inGameCardComponent[dartIdx]._isSelected) yield break; // 동일 카드 선택 불가
+        
         _inGameCardComponent[_curDartIdx].DeselectCard();
         _curDartIdx = dartIdx;
         _inGameCardComponent[_curDartIdx].SelectCard();
