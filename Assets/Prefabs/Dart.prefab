@@ -102,7 +102,9 @@ MonoBehaviour:
   dartManager: {fileID: 0}
   targetManager: {fileID: 0}
   templateDart: {fileID: 11400000, guid: 9c50b9a5f3ac69c40a0ef1e3a984c95a, type: 2}
-  interval: 5
+  wallTransform:
+  - {fileID: 0}
+  - {fileID: 0}
   drag: 5
   moveSpeed: 5
   moveDir: {x: 1, y: 0, z: 0}

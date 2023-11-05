@@ -10,17 +10,19 @@ public class DartManager : Singleton<DartManager>
 {
     [SerializeField] private InGameUI inGameUI;
     [SerializeField] private TemplateDart templateDart;
+    [SerializeField] private TargetManager targetManager;
 
     private const int AllDartsCnt = 16;
 
-    private GameObject _curDart;
     private Card[] _inGameCardComponent = new Card[4];
+    private List<GameObject> _dartList;
     private int[] _dartType = new int[4];
     private int _curDartIdx = 0;
     private bool[] _isUsedType = new bool[16];
     private bool[] _isSelected = new bool[4];
     private bool _isRerolled;
 
+    public List<GameObject> DartList => _dartList;
     private void Awake()
     {
         for (int i = 0; i < 4; i++)
@@ -98,8 +100,18 @@ public class DartManager : Singleton<DartManager>
     public void SpawnDart(int dartType, Vector3 spawnPosition)
     {
         Vector3 position = spawnPosition + Vector3.back;
-        _curDart = Instantiate(templateDart.dartPrefab, position, Quaternion.identity);
-        
+        GameObject curDart = Instantiate(templateDart.dartPrefab, position, Quaternion.identity);
+        _dartList.Add(curDart);
+        StartCoroutine(nameof(OnDartCollision));
+    }
+
+    private IEnumerator OnDartCollision()
+    {
+        if (_dartList[0].GetComponent<Dart>().OnTriggerEnter2D())
+        {
+            
+        }
+        _dartList.Clear();
     }
     public void OnClickChangeDart(int dartIdx)
     {
@@ -113,8 +125,8 @@ public class DartManager : Singleton<DartManager>
         _inGameCardComponent[_curDartIdx].DeselectCard();
         _curDartIdx = dartIdx;
         _inGameCardComponent[_curDartIdx].SelectCard();
-        _curDart.GetComponent<Dart>().Setup(_curDartIdx);
-        yield break;
+        _dartList[0].GetComponent<Dart>().Setup(_curDartIdx);
+        yield return null;
     }
 
     public void DartDestroy()
