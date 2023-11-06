@@ -14,16 +14,15 @@ public class Dart : MonoBehaviour
     private int _dartType;
     private int _dartDamage;
     private int _dartRange;
-    private bool _isMoving; // 다트 발사 여부 판단
     private Sprite _dartImage;
 
+    public bool isCollide;
     public int DartType { get; set; }
     public Vector3 moveDir; // 좌우 방향
 
     public void Awake() // Game Start 버튼으로 호출됨
     {
         _dartType = 1;
-        _isMoving = true;
         _moveSpeed = moveSpeed;
         moveDir = Vector3.right;
         _dartImage = GetComponent<SpriteRenderer>().sprite; 
@@ -33,42 +32,23 @@ public class Dart : MonoBehaviour
         _dartType = dartType;
         _dartDamage = templateDart.darts[_dartType].damage;
         _dartRange = templateDart.darts[_dartType].range;
-        _dartImage = templateDart.darts[_dartType].sprite;
+        _dartImage = templateDart.darts[_dartType].cardImageSprite;
     }
     private void Update()
     {
-        float distStart = Vector3.Distance(transform.position, wallTransform[0].position);
-        float distEnd = Vector3.Distance(transform.position, wallTransform[1].position);
-        float minDist = Mathf.Min(distStart, distEnd);
-        
-        _moveSpeed = moveSpeed * minDist * drag; // 속도 갱신
-        if (_isMoving) transform.position += Time.deltaTime * _moveSpeed * moveDir; // 다트 발사 중이 아닐 때 좌우 왕복
         
     }
-    private void ChangeDir() // 다트 좌우 방향 변경
-    {
-        if (moveDir == Vector3.left) moveDir = Vector3.right;
-        else if (moveDir == Vector3.right) moveDir = Vector3.left;
-    }
-
     public void ShootDart() // 다트 발사 
     {
         transform.position += Time.deltaTime * _moveSpeed * Vector3.up;
-        _isMoving = false;
     }
     public void OnTriggerEnter2D(Collider2D collision) // 다트 충돌 시 타겟에 데미지 연산 및 다트 오브젝트 삭제
     {
-        if (collision.CompareTag("Wall"))
-        {
-            ChangeDir();
-        }
-        templateDart.targetManager.DamageTarget(templateDart.darts[_dartType].damage, templateDart.darts[_dartType].range);
-        OnDie(); // TODO : 다트 소멸 이펙트 추가
+        isCollide = true;
     }
 
-    private void OnDie()
+    public void OnDie()
     {
-        templateDart.dartManager.DartDestroy();
         Destroy(gameObject);
     }
 }
