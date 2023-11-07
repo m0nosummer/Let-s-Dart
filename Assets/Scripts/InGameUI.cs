@@ -26,6 +26,7 @@ public class InGameUI : MonoBehaviour
     {
         selectCardsPanel.SetActive(false);
         dartManager.SetInGameCards();
+        
         inGameCards[0].GetComponent<Card>().SelectCard();
         dartManager.SpawnDart(0, spawnPoint);
     }

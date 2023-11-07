@@ -25,7 +25,6 @@ public class DartManager : Singleton<DartManager>
 
     private void Awake()
     {
-        _curDartComponent = curDart.GetComponent<Dart>();
         for (int i = 0; i < 4; i++)
         {
             _inGameCardComponent[i] = inGameUI.inGameCards[i].GetComponent<Card>();
@@ -98,19 +97,23 @@ public class DartManager : Singleton<DartManager>
     }
     public void SpawnDart(int dartType, Vector3 spawnPosition) 
     {
-        Vector3 position = spawnPosition + Vector3.back;
+        Vector3 position = spawnPosition + (Vector3.forward * 80);
         GameObject clone = Instantiate(templateDart.dartPrefab, position, Quaternion.identity);
-        curDart = clone;
+        curDart = clone; _curDartIdx = 0;
+        _curDartComponent = curDart.GetComponent<Dart>();
+        _curDartComponent.Setup(_curDartIdx);
         StartCoroutine(nameof(OnDartCollision));
     }
 
-    private IEnumerator OnDartCollision()
+    private IEnumerator OnDartCollision() // 다트 충돌 시 데미지 연산, 다트 삭제
     {
-        if (curDart.GetComponent<Dart>().isCollide)
+        if (curDart.GetComponent<Dart>().IsCollide)
         {
+            targetManager.DamageTarget(_curDartComponent.DartDamage, _curDartComponent.DartRange);
+            curDart.GetComponent<Dart>().IsCollide = false;
             DartDestroy();
-            yield return null;
         }
+        yield return null;
     }
     public void ChangeDart(int dartIdx) // 다트 버튼을 선택하여 바꾸기
     {
@@ -124,7 +127,7 @@ public class DartManager : Singleton<DartManager>
 
     public void DartDestroy()
     {
-        StopCoroutine(nameof(ChangeDart));
+        StopCoroutine(nameof(OnDartCollision));
         _curDartComponent.OnDie();
     }
 }

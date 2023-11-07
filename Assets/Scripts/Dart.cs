@@ -7,48 +7,40 @@ public enum DartType { NormalDart = 0, Dart1, Dart2, Dart3, }
 public class Dart : MonoBehaviour
 {
     [SerializeField] private TemplateDart templateDart; // 다트 종류 설정
-    [SerializeField] private float drag; // 좌우 운동 가속도 조절
     [SerializeField] private float moveSpeed;
     
-    private float _moveSpeed;
     private int _dartType;
     private int _dartDamage;
     private int _dartRange;
-    private Sprite _dartImage;
+    private bool _isCollide;
 
-    public bool isCollide;
+    public bool IsCollide { get; set; }
     public int DartType { get; set; }
-    public Vector3 moveDir; // 좌우 방향
-
-    public void Awake() // Game Start 버튼으로 호출됨
-    {
-        _dartType = 1;
-        _moveSpeed = moveSpeed;
-        moveDir = Vector3.right;
-        _dartImage = GetComponent<SpriteRenderer>().sprite; 
-    }
-    public void Setup(int dartType) // 다트타입, 데미지, 범위, 다트이미지 초기화
+    public int DartDamage { get; set; }
+    public int DartRange { get; set; }
+    
+    
+    [Tooltip("다트 타입, 데미지, 범위, 다트이미지 초기화")]
+    public void Setup(int dartType)
     {
         _dartType = dartType;
         _dartDamage = templateDart.darts[_dartType].damage;
         _dartRange = templateDart.darts[_dartType].range;
-        _dartImage = templateDart.darts[_dartType].cardImageSprite;
+        GetComponent<SpriteRenderer>().sprite = templateDart.darts[_dartType].dartImageSprite;
     }
-    private void Update()
+    public void ShootDart()
     {
-        
+        transform.position += Time.deltaTime * moveSpeed * Vector3.up;
     }
-    public void ShootDart() // 다트 발사 
+    
+    public void OnTriggerEnter2D(Collider2D collision)
     {
-        transform.position += Time.deltaTime * _moveSpeed * Vector3.up;
-    }
-    public void OnTriggerEnter2D(Collider2D collision) // 다트 충돌 시 타겟에 데미지 연산 및 다트 오브젝트 삭제
-    {
-        isCollide = true;
+        _isCollide = true;
     }
 
     public void OnDie()
     {
+        // TODO : 다트 소멸 애니메이션 추가
         Destroy(gameObject);
     }
 }
