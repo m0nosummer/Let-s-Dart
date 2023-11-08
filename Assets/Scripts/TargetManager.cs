@@ -4,11 +4,32 @@ using UnityEngine;
 
 public class TargetManager : Singleton<TargetManager>
 {
-    private Target[] _targets = new Target[8]; // target : 8개
+    [SerializeField] private GameObject playScreenPanel;
+    [SerializeField] private GameObject targetPrefab;
+    
+    
+    private GameObject[] _targets = new GameObject[8];
+    private Target[] _targetComponents = new Target[8]; // target : 8개
     private int _stageLevel;
 
-    private void SetTargetHP() // 합 = StageLevel이 되도록 8개의 칸에 HP 배분
+    public void SetTargets(float screenW, float screenH, float playPanelRatio) // playPanelRatio : h / w
     {
+        float targetHalfSize = screenW / 16;
+        float panelH = screenW * playPanelRatio;
+
+        for (int i = 0; i < 8; i++)
+        {
+            Vector3 offsetPos = new Vector3(targetHalfSize * (i - 1) - screenW / 2, panelH / 2, 0);
+            Vector3 spawnPos = playScreenPanel.transform.position + offsetPos;
+            GameObject clone = Instantiate(targetPrefab, spawnPos, Quaternion.identity);
+            
+            clone.transform.localScale = new Vector3(targetHalfSize * 2, targetHalfSize * 2, 0);
+            _targetComponents[i] = clone.GetComponent<Target>();
+        }
+    }
+    public void SetTargetHP(int curStageLevel) // 합 = StageLevel이 되도록 8개의 칸에 HP 배분
+    {
+        _stageLevel = curStageLevel;
         int[] tmpHP = new int[8];
         while (true)
         {
@@ -23,7 +44,7 @@ public class TargetManager : Singleton<TargetManager>
             
             for (int i = 0; i < tmpHP.Length; i++)
             {
-                _targets[i].TargetHP = tmpHP[i];
+                _targetComponents[i].TargetHP = tmpHP[i];
             }
         }
     }

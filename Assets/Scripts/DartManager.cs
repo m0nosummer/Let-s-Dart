@@ -100,6 +100,7 @@ public class DartManager : Singleton<DartManager>
         Vector3 position = spawnPosition + (Vector3.forward * 80);
         GameObject clone = Instantiate(templateDart.dartPrefab, position, Quaternion.identity);
         curDart = clone; _curDartIdx = 0;
+        
         _curDartComponent = curDart.GetComponent<Dart>();
         _curDartComponent.Setup(_curDartIdx);
         StartCoroutine(nameof(OnDartCollision));

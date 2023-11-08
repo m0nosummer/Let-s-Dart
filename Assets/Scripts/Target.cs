@@ -19,6 +19,10 @@ public class Target : MonoBehaviour
         {
             return false;
         }
+        else if (_targetHP == 0)
+        {
+            
+        }
 
         return true;
     }
