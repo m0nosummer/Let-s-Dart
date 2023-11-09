@@ -6,6 +6,9 @@ using UnityEngine.EventSystems;
 
 public class MoveDart : MonoBehaviour
 {
+    [SerializeField] private DartManager dartManager;
+    [SerializeField] private InGameUI inGameUI;
+    
     private Dart _dart;
     private Camera _mainCamera;
     private Rigidbody2D _rb;
@@ -39,7 +42,10 @@ public class MoveDart : MonoBehaviour
                     break;
                 
                 case TouchPhase.Ended:
-                    // _dart.ShootDart();
+                    _dart.ShootDart();
+                    dartManager.SpawnDart(dartManager.DartTypes[2],
+                        inGameUI.playPanel.transform.position +
+                        Vector3.down * (inGameUI.ScreenWidth * inGameUI.PlayPanelRatio / 2));
                     break;
             }
         }

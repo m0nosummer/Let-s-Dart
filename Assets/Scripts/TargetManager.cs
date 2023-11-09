@@ -12,14 +12,15 @@ public class TargetManager : Singleton<TargetManager>
     private Target[] _targetComponents = new Target[8]; // target : 8개
     private int _stageLevel;
 
-    public void SetTargets(float screenW, float screenH, float playPanelRatio) // playPanelRatio : h / w
+    public void SpawnTargets(float screenWidth, float playPanelRatio) // playPanelRatio : h / w
     {
-        float targetHalfSize = screenW / 16;
-        float panelH = screenW * playPanelRatio;
+        float targetHalfSize = screenWidth / 16;
+        float panelHeight = screenWidth * playPanelRatio;
 
         for (int i = 0; i < 8; i++)
         {
-            Vector3 offsetPos = new Vector3(targetHalfSize * (i - 1) - screenW / 2, panelH / 2, 0);
+            Vector3 offsetPos = new Vector3(targetHalfSize * 2 * i - screenWidth / 2 + targetHalfSize,
+                panelHeight / 2 - targetHalfSize, 0);
             Vector3 spawnPos = playScreenPanel.transform.position + offsetPos;
             GameObject clone = Instantiate(targetPrefab, spawnPos, Quaternion.identity);
             

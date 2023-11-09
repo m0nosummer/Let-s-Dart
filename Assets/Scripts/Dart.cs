@@ -14,10 +14,26 @@ public class Dart : MonoBehaviour
     private int _dartRange;
     private bool _isCollide;
 
-    public bool IsCollide { get; set; }
-    public int DartType { get; set; }
-    public int DartDamage { get; set; }
-    public int DartRange { get; set; }
+    public bool IsCollide
+    {
+        get => _isCollide;
+        set => _isCollide = value;
+    }
+    public int DartType
+    {
+        get => _dartType;
+        set => _dartType = value;
+    }
+    public int DartDamage
+    {
+        get => _dartDamage;
+        set => _dartDamage = value;
+    }
+    public int DartRange
+    {
+        get => _dartRange;
+        set => _dartRange = value;
+    }
     
     
     [Tooltip("다트 타입, 데미지, 범위, 다트이미지 초기화")]

@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using DG.Tweening;
 using UnityEngine;
 using UnityEngine.UI;
@@ -12,17 +13,24 @@ public class DartManager : Singleton<DartManager>
     [SerializeField] private TemplateDart templateDart;
     [SerializeField] private TargetManager targetManager;
 
-    public GameObject curDart;
+    public List<GameObject> curDartList;
 
     private Card[] _inGameCardComponent = new Card[4];
-    private Dart _curDartComponent;
-    private int[] _dartType = new int[4];
-    private int _AllDartsCnt = 16;
+    private List<Dart> _curDartComponentList;
+    private int[] _dartTypes = new int[4];
+    private int _allDartsCnt = 16;
     private int _curDartIdx;
     private bool[] _isUsedType = new bool[16];
     private bool[] _isSelected = new bool[4];
     private bool _isRerolled;
 
+    public int[] DartTypes
+    {
+        get
+        {
+            return _dartTypes;
+        }
+    }
     private void Awake()
     {
         for (int i = 0; i < 4; i++)
@@ -33,18 +41,18 @@ public class DartManager : Singleton<DartManager>
     public void SetStartCards() // 게임 시작 시 고정 다트 1개와 랜덤 다트 4개를 선택
     {
         _isUsedType[0] = true;
-        _dartType[0] = 0;
+        _dartTypes[0] = 0;
         inGameUI.startCards[0].GetComponent<Image>().sprite = templateDart.darts[0].cardImageSprite;
         for (int i = 1; i < 4; i++)
         {
             int curDartType;
             while (true)
             {
-                curDartType = Random.Range(1, _AllDartsCnt);
+                curDartType = Random.Range(1, _allDartsCnt);
                 if (!_isUsedType[curDartType]) break;
             }
             _isUsedType[curDartType] = true;
-            _dartType[i] = curDartType;
+            _dartTypes[i] = curDartType;
             inGameUI.startCards[i].GetComponent<Image>().sprite = templateDart.darts[curDartType].cardImageSprite;
         }
     }
@@ -52,7 +60,7 @@ public class DartManager : Singleton<DartManager>
     {
         for (int i = 0; i < 4; i++)
         {
-            inGameUI.inGameCards[i].GetComponent<Image>().sprite = templateDart.darts[_dartType[i]].cardImageSprite;
+            inGameUI.inGameCards[i].GetComponent<Image>().sprite = templateDart.darts[_dartTypes[i]].cardImageSprite;
         }
     }
     public void SelectCardToReroll(int selectIdx)
@@ -77,41 +85,42 @@ public class DartManager : Singleton<DartManager>
         for (int i = 1; i < 4; i++)
         {
             if (!_isSelected[i]) continue;
-            int prevDartType = _dartType[i];
+            int prevDartType = _dartTypes[i];
             int curDartType = 0;
             
             // TODO : 카드 리롤 애니메이션
             
             while (true)
             {
-                curDartType = Random.Range(1, _AllDartsCnt);
+                curDartType = Random.Range(1, _allDartsCnt);
                 if (!_isUsedType[curDartType]) break;
             }
             _isUsedType[prevDartType] = false;
             _isUsedType[curDartType] = true;
-            _dartType[i] = curDartType;
+            _dartTypes[i] = curDartType;
             inGameUI.startCards[i].GetComponent<Image>().sprite = templateDart.darts[curDartType].cardImageSprite;
 
             // TODO : 카드 버튼에 정보 갱신
         }
     }
-    public void SpawnDart(int dartType, Vector3 spawnPosition) 
+    public void SpawnDart(int dartType, Vector3 spawnPosition) // spawnPosition + dart 크기 * 2 에서 spawn
     {
         Vector3 position = spawnPosition + (Vector3.forward * 80);
         GameObject clone = Instantiate(templateDart.dartPrefab, position, Quaternion.identity);
-        curDart = clone; _curDartIdx = 0;
+        curDartList.Add(clone);
+        _curDartIdx = 0;
         
-        _curDartComponent = curDart.GetComponent<Dart>();
-        _curDartComponent.Setup(_curDartIdx);
+        _curDartComponentList.Add(clone.GetComponent<Dart>());
+        _curDartComponentList.Last().Setup(_curDartIdx);
         StartCoroutine(nameof(OnDartCollision));
     }
 
     private IEnumerator OnDartCollision() // 다트 충돌 시 데미지 연산, 다트 삭제
     {
-        if (curDart.GetComponent<Dart>().IsCollide)
+        if (curDartList.Last().GetComponent<Dart>().IsCollide)
         {
-            targetManager.DamageTarget(_curDartComponent.DartDamage, _curDartComponent.DartRange);
-            curDart.GetComponent<Dart>().IsCollide = false;
+            targetManager.DamageTarget(_curDartComponentList.Last().DartDamage, _curDartComponentList.Last().DartRange);
+            curDartList.Last().GetComponent<Dart>().IsCollide = false;
             DartDestroy();
         }
         yield return null;
@@ -123,12 +132,14 @@ public class DartManager : Singleton<DartManager>
         _inGameCardComponent[_curDartIdx].DeselectCard();
         _curDartIdx = dartIdx;
         _inGameCardComponent[_curDartIdx].SelectCard();
-        _curDartComponent.Setup(_curDartIdx);
+        _curDartComponentList.Last().Setup(_curDartIdx);
     }
 
     public void DartDestroy()
     {
         StopCoroutine(nameof(OnDartCollision));
-        _curDartComponent.OnDie();
+        _curDartComponentList.Last().OnDie();
+        curDartList.RemoveAt(curDartList.Count - 1);
+        _curDartComponentList.RemoveAt(curDartList.Count - 1);
     }
 }
