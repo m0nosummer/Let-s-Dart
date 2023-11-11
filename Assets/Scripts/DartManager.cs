@@ -33,6 +33,8 @@ public class DartManager : Singleton<DartManager>
     }
     private void Awake()
     {
+        curDartList = new List<GameObject>();
+        _curDartComponentList = new List<Dart>();
         for (int i = 0; i < 4; i++)
         {
             _inGameCardComponent[i] = inGameUI.inGameCards[i].GetComponent<Card>();
@@ -109,17 +111,26 @@ public class DartManager : Singleton<DartManager>
         GameObject clone = Instantiate(templateDart.dartPrefab, position, Quaternion.identity);
         curDartList.Add(clone);
         _curDartIdx = 0;
-        
         _curDartComponentList.Add(clone.GetComponent<Dart>());
         _curDartComponentList.Last().Setup(_curDartIdx);
+        _curDartComponentList.Last().OnDartVariableChanged += HandleDartVariableChanged;
         StartCoroutine(nameof(OnDartCollision));
     }
 
+    private void HandleDartVariableChanged(bool newValue)
+    {
+        if (newValue)
+        {
+            Debug.Log("true man");
+        }
+    }
     private IEnumerator OnDartCollision() // 다트 충돌 시 데미지 연산, 다트 삭제
     {
+        Debug.Log(curDartList.Last().GetComponent<Dart>().IsCollide.ToString());
         if (curDartList.Last().GetComponent<Dart>().IsCollide)
         {
-            targetManager.DamageTarget(_curDartComponentList.Last().DartDamage, _curDartComponentList.Last().DartRange);
+            Debug.Log("Collide" + curDartList.Last().name);
+            // targetManager.DamageTarget(_curDartComponentList.Last().DartDamage, _curDartComponentList.Last().DartRange);
             curDartList.Last().GetComponent<Dart>().IsCollide = false;
             DartDestroy();
         }
@@ -134,7 +145,12 @@ public class DartManager : Singleton<DartManager>
         _inGameCardComponent[_curDartIdx].SelectCard();
         _curDartComponentList.Last().Setup(_curDartIdx);
     }
-
+    public void TouchEnd()
+    {
+        _curDartComponentList.Last().ShootDart();
+        SpawnDart(DartTypes[_curDartIdx], inGameUI.playPanel.transform.position +
+                                Vector3.down * (inGameUI.ScreenWidth * inGameUI.PlayPanelRatio / 2));
+    }
     public void DartDestroy()
     {
         StopCoroutine(nameof(OnDartCollision));

@@ -135,7 +135,7 @@ GameObject:
   - component: {fileID: 24230691}
   m_Layer: 0
   m_Name: DartManager
-  m_TagString: Untagged
+  m_TagString: DartManager
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -710,7 +710,7 @@ GameObject:
   - component: {fileID: 134681667}
   m_Layer: 0
   m_Name: TargetManager
-  m_TagString: Untagged
+  m_TagString: TargetManager
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1386,7 +1386,7 @@ GameObject:
   - component: {fileID: 415599815}
   m_Layer: 5
   m_Name: Canvas
-  m_TagString: Untagged
+  m_TagString: Canvas
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

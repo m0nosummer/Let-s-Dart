@@ -6,18 +6,18 @@ using UnityEngine.EventSystems;
 
 public class MoveDart : MonoBehaviour
 {
-    [SerializeField] private DartManager dartManager;
-    [SerializeField] private InGameUI inGameUI;
     
     private Dart _dart;
-    private Camera _mainCamera;
     private Rigidbody2D _rb;
-
+    private DartManager _dartManager;
+    private Camera _mainCamera;
+    private bool _canMove = true;
     private void Start()
     {
         _dart = GetComponent<Dart>();
         _rb = GetComponent<Rigidbody2D>();
         _mainCamera = GameObject.FindWithTag("MainCamera").GetComponent<Camera>();
+        _dartManager = GameObject.FindWithTag("DartManager").GetComponent<DartManager>();
     }
 
     private void Update()
@@ -30,7 +30,7 @@ public class MoveDart : MonoBehaviour
             GameObject clickedObj = EventSystem.current.currentSelectedGameObject;
             
             if (!clickedObj.CompareTag("PlayScreen")) return;
-            
+            if (!_canMove) return;
             switch (touch.phase)
             {
                 case TouchPhase.Began:
@@ -42,10 +42,8 @@ public class MoveDart : MonoBehaviour
                     break;
                 
                 case TouchPhase.Ended:
-                    _dart.ShootDart();
-                    dartManager.SpawnDart(dartManager.DartTypes[2],
-                        inGameUI.playPanel.transform.position +
-                        Vector3.down * (inGameUI.ScreenWidth * inGameUI.PlayPanelRatio / 2));
+                    _dartManager.TouchEnd();
+                    _canMove = false;
                     break;
             }
         }

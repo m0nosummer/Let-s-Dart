@@ -6,8 +6,10 @@ TagManager:
   tags:
   - Target
   - Dart
-  - Wall
   - PlayScreen
+  - DartManager
+  - TargetManager
+  - Canvas
   layers:
   - Default
   - TransparentFX

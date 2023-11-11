@@ -7,17 +7,20 @@ public enum DartType { NormalDart = 0, Dart1, Dart2, Dart3, }
 public class Dart : MonoBehaviour
 {
     [SerializeField] private TemplateDart templateDart; // 다트 종류 설정
-    [SerializeField] private float moveSpeed;
+    [SerializeField] private float moveSpeed = 5f;
     
     private int _dartType;
     private int _dartDamage;
     private int _dartRange;
-    private bool _isCollide;
+    private bool _isCollide = false;
 
     public bool IsCollide
     {
         get => _isCollide;
-        set => _isCollide = value;
+        set
+        {   _isCollide = value;
+             OnDartVariableChanged?.Invoke(value);
+         }
     }
     public int DartType
     {
@@ -35,6 +38,7 @@ public class Dart : MonoBehaviour
         set => _dartRange = value;
     }
     
+    public event Action<bool> OnDartVariableChanged; // _isCollide 변수 감지
     
     [Tooltip("다트 타입, 데미지, 범위, 다트이미지 초기화")]
     public void Setup(int dartType)
@@ -46,12 +50,24 @@ public class Dart : MonoBehaviour
     }
     public void ShootDart()
     {
-        transform.position += Time.deltaTime * moveSpeed * Vector3.up;
+        StartCoroutine(nameof(MoveUp));
+        Debug.Log("coroutine is running" + gameObject.name);
     }
-    
     public void OnTriggerEnter2D(Collider2D collision)
     {
+        StopCoroutine(nameof(MoveUp));
+        if (!collision.CompareTag("Target")) return;
+        Debug.Log(collision.name);
         _isCollide = true;
+    }
+
+    private IEnumerator MoveUp()
+    {
+        while (true)
+        {
+            transform.position += Vector3.up * moveSpeed * Time.deltaTime;
+            yield return null;
+        }
     }
 
     public void OnDie()
