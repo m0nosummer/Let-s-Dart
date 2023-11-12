@@ -12,7 +12,8 @@ public class Dart : MonoBehaviour
     private int _dartType;
     private int _dartDamage;
     private int _dartRange;
-    private bool _isCollide = false;
+    private bool _isCollide;
+    private bool _isMoving;
 
     public bool IsCollide
     {
@@ -21,6 +22,11 @@ public class Dart : MonoBehaviour
         {   _isCollide = value;
              OnDartVariableChanged?.Invoke(value);
          }
+    }
+    public bool IsMoving
+    {
+        get => _isMoving;
+        set => _isMoving = value;
     }
     public int DartType
     {
@@ -50,15 +56,14 @@ public class Dart : MonoBehaviour
     }
     public void ShootDart()
     {
+        IsMoving = true;
         StartCoroutine(nameof(MoveUp));
-        Debug.Log("coroutine is running" + gameObject.name);
     }
     public void OnTriggerEnter2D(Collider2D collision)
     {
         StopCoroutine(nameof(MoveUp));
         if (!collision.CompareTag("Target")) return;
-        Debug.Log(collision.name);
-        _isCollide = true;
+        IsCollide = true;
     }
 
     private IEnumerator MoveUp()

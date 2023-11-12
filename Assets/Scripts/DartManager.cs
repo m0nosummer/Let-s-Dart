@@ -13,10 +13,10 @@ public class DartManager : Singleton<DartManager>
     [SerializeField] private TemplateDart templateDart;
     [SerializeField] private TargetManager targetManager;
 
-    public List<GameObject> curDartList;
+    public GameObject curDart;
 
     private Card[] _inGameCardComponent = new Card[4];
-    private List<Dart> _curDartComponentList;
+    private Dart _curDartComponent;
     private int[] _dartTypes = new int[4];
     private int _allDartsCnt = 16;
     private int _curDartIdx;
@@ -33,8 +33,7 @@ public class DartManager : Singleton<DartManager>
     }
     private void Awake()
     {
-        curDartList = new List<GameObject>();
-        _curDartComponentList = new List<Dart>();
+        _curDartIdx = 0;
         for (int i = 0; i < 4; i++)
         {
             _inGameCardComponent[i] = inGameUI.inGameCards[i].GetComponent<Card>();
@@ -107,55 +106,39 @@ public class DartManager : Singleton<DartManager>
     }
     public void SpawnDart(int dartType, Vector3 spawnPosition) // spawnPosition + dart 크기 * 2 에서 spawn
     {
-        Vector3 position = spawnPosition + (Vector3.forward * 80);
+        Vector3 position = spawnPosition + Vector3.back;
+        float dartSize = inGameUI.ScreenWidth / 16;
         GameObject clone = Instantiate(templateDart.dartPrefab, position, Quaternion.identity);
-        curDartList.Add(clone);
-        _curDartIdx = 0;
-        _curDartComponentList.Add(clone.GetComponent<Dart>());
-        _curDartComponentList.Last().Setup(_curDartIdx);
-        _curDartComponentList.Last().OnDartVariableChanged += HandleDartVariableChanged;
-        StartCoroutine(nameof(OnDartCollision));
+        clone.transform.localScale = new Vector3(dartSize, dartSize, dartSize);
+        curDart = clone;
+        _curDartComponent = clone.GetComponent<Dart>();
+        _curDartComponent.Setup(dartType);
+        _curDartComponent.OnDartVariableChanged += HandleDartVariableChanged;
     }
 
-    private void HandleDartVariableChanged(bool newValue)
+    private void HandleDartVariableChanged(bool curValue) // 다트 충돌 시 데미지 연산, 다트 삭제
     {
-        if (newValue)
+        if (curValue)
         {
-            Debug.Log("true man");
-        }
-    }
-    private IEnumerator OnDartCollision() // 다트 충돌 시 데미지 연산, 다트 삭제
-    {
-        Debug.Log(curDartList.Last().GetComponent<Dart>().IsCollide.ToString());
-        if (curDartList.Last().GetComponent<Dart>().IsCollide)
-        {
-            Debug.Log("Collide" + curDartList.Last().name);
             // targetManager.DamageTarget(_curDartComponentList.Last().DartDamage, _curDartComponentList.Last().DartRange);
-            curDartList.Last().GetComponent<Dart>().IsCollide = false;
+            _curDartComponent.IsCollide = false;
             DartDestroy();
         }
-        yield return null;
     }
     public void ChangeDart(int dartIdx) // 다트 버튼을 선택하여 바꾸기
     {
-        if (_inGameCardComponent[dartIdx]._isSelected) return; // 동일 카드 선택 불가
+        if (_inGameCardComponent[dartIdx].IsSelected) return; // 동일 카드 선택 불가
+        if (_curDartComponent.IsMoving) return;
         
         _inGameCardComponent[_curDartIdx].DeselectCard();
         _curDartIdx = dartIdx;
         _inGameCardComponent[_curDartIdx].SelectCard();
-        _curDartComponentList.Last().Setup(_curDartIdx);
-    }
-    public void TouchEnd()
-    {
-        _curDartComponentList.Last().ShootDart();
-        SpawnDart(DartTypes[_curDartIdx], inGameUI.playPanel.transform.position +
-                                Vector3.down * (inGameUI.ScreenWidth * inGameUI.PlayPanelRatio / 2));
+        _curDartComponent.Setup(_dartTypes[_curDartIdx]);
     }
     public void DartDestroy()
     {
-        StopCoroutine(nameof(OnDartCollision));
-        _curDartComponentList.Last().OnDie();
-        curDartList.RemoveAt(curDartList.Count - 1);
-        _curDartComponentList.RemoveAt(curDartList.Count - 1);
+        _curDartComponent.OnDie();
+        SpawnDart(DartTypes[_curDartIdx], inGameUI.playPanel.transform.position +
+                                Vector3.down * (inGameUI.ScreenWidth * inGameUI.PlayPanelRatio / 2));
     }
 }

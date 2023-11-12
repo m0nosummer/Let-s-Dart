@@ -21,7 +21,7 @@ public class TargetManager : Singleton<TargetManager>
         {
             Vector3 offsetPos = new Vector3(targetHalfSize * 2 * i - screenWidth / 2 + targetHalfSize,
                 panelHeight / 2 - targetHalfSize, 0);
-            Vector3 spawnPos = playScreenPanel.transform.position + offsetPos;
+            Vector3 spawnPos = playScreenPanel.transform.position + offsetPos + Vector3.back;
             GameObject clone = Instantiate(targetPrefab, spawnPos, Quaternion.identity);
             
             clone.transform.localScale = new Vector3(targetHalfSize * 2, targetHalfSize * 2, 0);

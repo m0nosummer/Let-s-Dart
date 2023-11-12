@@ -42,7 +42,8 @@ public class MoveDart : MonoBehaviour
                     break;
                 
                 case TouchPhase.Ended:
-                    _dartManager.TouchEnd();
+                    _rb.MovePosition(new Vector2(touchPos.x, transform.position.y));
+                    _dart.ShootDart();
                     _canMove = false;
                     break;
             }

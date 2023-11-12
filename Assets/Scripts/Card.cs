@@ -10,11 +10,17 @@ public class Card : MonoBehaviour
     [SerializeField] private float moveAmount = 10f;
     [SerializeField] private float moveTime = 0.1f;
 
-    public bool _isSelected;
     
     private RectTransform _rectTransform;
     private Vector3 _startPos;
     private Vector3 _startScale;
+    private bool _isSelected;
+
+    public bool IsSelected
+    {
+        get => _isSelected;
+        set => _isSelected = value;
+    }
 
     private void Start()
     {

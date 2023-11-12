@@ -101,7 +101,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   templateDart: {fileID: 11400000, guid: 9c50b9a5f3ac69c40a0ef1e3a984c95a, type: 2}
-  moveSpeed: 1
+  moveSpeed: 10
 --- !u!50 &2498909151656976325
 Rigidbody2D:
   serializedVersion: 4
