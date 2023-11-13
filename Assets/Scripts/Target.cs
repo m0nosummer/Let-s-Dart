@@ -4,22 +4,22 @@ using UnityEngine;
 
 public class Target : MonoBehaviour
 {
-    private int _targetHP;
+    private int _targetHp;
 
-    public int TargetHP
+    public int TargetHp
     {
-        get => _targetHP;
-        set => _targetHP = Mathf.Max(value, 0);
+        get => _targetHp;
+        set => _targetHp = Mathf.Max(value, 0);
     }
     
-    public bool OnDartCollision(int dartAttack)
+    public bool TargetLoseHp(int dartAttack)
     {
-        _targetHP -= dartAttack;
-        if (_targetHP < 0)
+        _targetHp -= dartAttack;
+        if (_targetHp < 0)
         {
             return false;
         }
-        else if (_targetHP == 0)
+        else if (_targetHp == 0)
         {
             
         }

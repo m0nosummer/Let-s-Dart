@@ -61,7 +61,7 @@ public class InGameUI : MonoBehaviour
         selectCardsPanel.SetActive(false);
         dartManager.SetInGameCards();
         targetManager.SpawnTargets(_screenWidth, _playPanelRatio);
-        // targetManager.SetTargetHP(stageLevel);
+        targetManager.SetTargetHp(stageLevel);
         
         inGameCards[0].GetComponent<Card>().SelectCard(); // 시작 시 기본 카드 선택
         dartManager.SpawnDart(0, 

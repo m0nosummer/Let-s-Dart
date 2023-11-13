@@ -1,11 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class TargetManager : Singleton<TargetManager>
 {
     [SerializeField] private GameObject playScreenPanel;
     [SerializeField] private GameObject targetPrefab;
+    [SerializeField] private GameObject[] textTargetHps;
     
     
     private GameObject[] _targets = new GameObject[8];
@@ -23,12 +25,12 @@ public class TargetManager : Singleton<TargetManager>
                 panelHeight / 2 - targetHalfSize, 0);
             Vector3 spawnPos = playScreenPanel.transform.position + offsetPos + Vector3.back;
             GameObject clone = Instantiate(targetPrefab, spawnPos, Quaternion.identity);
-            
+            textTargetHps[i].transform.position = spawnPos;
             clone.transform.localScale = new Vector3(targetHalfSize * 2, targetHalfSize * 2, 0);
             _targetComponents[i] = clone.GetComponent<Target>();
         }
     }
-    public void SetTargetHP(int curStageLevel) // 합 = StageLevel이 되도록 8개의 칸에 HP 배분
+    public void SetTargetHp(int curStageLevel) // 합 = StageLevel이 되도록 8개의 칸에 HP 배분
     {
         _stageLevel = curStageLevel;
         int[] tmpHP = new int[8];
@@ -41,17 +43,26 @@ public class TargetManager : Singleton<TargetManager>
                 sum += tmpHP[i];
             }
 
-            if (sum != _stageLevel) continue;
-            
-            for (int i = 0; i < tmpHP.Length; i++)
-            {
-                _targetComponents[i].TargetHP = tmpHP[i];
-            }
+            if (sum == _stageLevel) break;
+        }
+
+        for (int i = 0; i < tmpHP.Length; i++)
+        {
+            _targetComponents[i].TargetHp = tmpHP[i];
+            textTargetHps[i].GetComponent<TextMeshProUGUI>().text = tmpHP[i].ToString();
+            textTargetHps[i].GetComponent<TextMeshProUGUI>().fontSize = Screen.width / 16;
+            textTargetHps[i].SetActive(true);
         }
     }
 
-    public void DamageTarget(int dartAttack, int dartRange)
+    public void DamageTarget(int curTargetIdx, int dartAttack, int dartRange)
     {
-        
+        for (int i = curTargetIdx - dartRange + 1; i < curTargetIdx + dartRange - 1; i++)
+        {
+            if (!_targetComponents[i].TargetLoseHp(dartAttack)) // 타겟 HP가 0보다 더 떨어짐
+            {
+                // game over
+            }
+        }
     }
 }
