@@ -11,7 +11,6 @@ public class InGameUI : MonoBehaviour
     public GameObject cardsPanel;
     public Vector3 topRight;
     public Vector3 bottomLeft;
-    public int stageLevel = 1;
     
     [SerializeField] private TargetManager targetManager;
     [SerializeField] private DartManager dartManager;
@@ -48,6 +47,9 @@ public class InGameUI : MonoBehaviour
         Vector3 bottomLeft = mainCamera.ViewportToWorldPoint(new Vector3(0f, 0f, 0));
         
         _rtPlayPanel = playPanel.GetComponent<RectTransform>();
+
+        targetManager.OnStageLevelChanged += HandleStageLevelChanged;
+        targetManager.OnGameOver += HandleGameOver;
     }
     public void SetStage()
     {
@@ -61,11 +63,26 @@ public class InGameUI : MonoBehaviour
         selectCardsPanel.SetActive(false);
         dartManager.SetInGameCards();
         targetManager.SpawnTargets(_screenWidth, _playPanelRatio);
-        targetManager.SetTargetHp(stageLevel);
+        targetManager.SetTargetHp(1);
         
         inGameCards[0].GetComponent<Card>().SelectCard(); // 시작 시 기본 카드 선택
         dartManager.SpawnDart(0, 
             playPanel.transform.position + Vector3.down * (_screenWidth * _playPanelRatio) / 2);
+    }
+    
+    public void HandleStageLevelChanged(int stageLevel)
+    {
+        targetManager.StageLevel = stageLevel;
+        targetManager.SetTargetHp(targetManager.StageLevel);
+        // TODO : UI Text 변경
+    }
+
+    public void HandleGameOver(bool isGameOver)
+    {
+        if (isGameOver)
+        {
+            Debug.Log("Game Over");
+        }
     }
 
     public void Undo()
@@ -77,8 +94,4 @@ public class InGameUI : MonoBehaviour
         
     }
 
-    public void ShootDart()
-    {
-        
-    }
 }

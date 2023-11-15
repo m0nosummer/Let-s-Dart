@@ -31,6 +31,7 @@ public class DartManager : Singleton<DartManager>
             return _dartTypes;
         }
     }
+    
     private void Awake()
     {
         _curDartIdx = 0;
@@ -39,24 +40,7 @@ public class DartManager : Singleton<DartManager>
             _inGameCardComponent[i] = inGameUI.inGameCards[i].GetComponent<Card>();
         }
     }
-    public void SetStartCards() // 게임 시작 시 고정 다트 1개와 랜덤 다트 4개를 선택
-    {
-        _isUsedType[0] = true;
-        _dartTypes[0] = 0;
-        inGameUI.startCards[0].GetComponent<Image>().sprite = templateDart.darts[0].cardImageSprite;
-        for (int i = 1; i < 4; i++)
-        {
-            int curDartType;
-            while (true)
-            {
-                curDartType = Random.Range(1, _allDartsCnt);
-                if (!_isUsedType[curDartType]) break;
-            }
-            _isUsedType[curDartType] = true;
-            _dartTypes[i] = curDartType;
-            inGameUI.startCards[i].GetComponent<Image>().sprite = templateDart.darts[curDartType].cardImageSprite;
-        }
-    }
+    
     public void SetInGameCards() // 선택한 카드 배치
     {
         for (int i = 0; i < 4; i++)
@@ -108,19 +92,22 @@ public class DartManager : Singleton<DartManager>
     {
         Vector3 position = spawnPosition + Vector3.back;
         float dartSize = inGameUI.ScreenWidth / 16;
+        
         GameObject clone = Instantiate(templateDart.dartPrefab, position, Quaternion.identity);
         clone.transform.localScale = new Vector3(dartSize, dartSize, dartSize);
         curDart = clone;
+        
         _curDartComponent = clone.GetComponent<Dart>();
         _curDartComponent.Setup(dartType);
         _curDartComponent.OnDartVariableChanged += HandleDartVariableChanged;
     }
 
-    private void HandleDartVariableChanged(bool curValue) // 다트 충돌 시 데미지 연산, 다트 삭제
+    private void HandleDartVariableChanged(bool isCollide) // 다트 충돌 시 데미지 연산, 다트 삭제
     {
-        if (curValue)
+        if (isCollide)
         {
-            // targetManager.DamageTarget(_curDartComponentList.Last().DartDamage, _curDartComponentList.Last().DartRange);
+            targetManager.DamageTarget(_curDartComponent.CurTargetCollisionIdx,
+                _curDartComponent.DartDamage, _curDartComponent.DartRange);
             _curDartComponent.IsCollide = false;
             DartDestroy();
         }

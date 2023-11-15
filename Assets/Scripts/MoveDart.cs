@@ -44,7 +44,7 @@ public class MoveDart : MonoBehaviour
                 case TouchPhase.Ended:
                     _rb.MovePosition(new Vector2(touchPos.x, transform.position.y));
                     _dart.ShootDart();
-                    _canMove = false;
+                    _canMove = false; // 다트 이동 중에는 드래그해도 위치 변하지 않음
                     break;
             }
         }

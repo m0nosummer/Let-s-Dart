@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
-public enum DartType { NormalDart = 0, Dart1, Dart2, Dart3, }
+
 public class Dart : MonoBehaviour
 {
     [SerializeField] private TemplateDart templateDart; // 다트 종류 설정
@@ -12,16 +12,16 @@ public class Dart : MonoBehaviour
     private int _dartType;
     private int _dartDamage;
     private int _dartRange;
+    private int _curTargetCollisionIdx;
     private bool _isCollide;
     private bool _isMoving;
-
     public bool IsCollide
     {
         get => _isCollide;
         set
         {   _isCollide = value;
              OnDartVariableChanged?.Invoke(value);
-         }
+        }
     }
     public bool IsMoving
     {
@@ -43,6 +43,11 @@ public class Dart : MonoBehaviour
         get => _dartRange;
         set => _dartRange = value;
     }
+    public int CurTargetCollisionIdx
+    {
+        get => _curTargetCollisionIdx;
+        set => _curTargetCollisionIdx = value;
+    }
     
     public event Action<bool> OnDartVariableChanged; // _isCollide 변수 감지
     
@@ -63,6 +68,7 @@ public class Dart : MonoBehaviour
     {
         StopCoroutine(nameof(MoveUp));
         if (!collision.CompareTag("Target")) return;
+         CurTargetCollisionIdx = collision.GetComponent<Target>().TargetIdx;
         IsCollide = true;
     }
 
