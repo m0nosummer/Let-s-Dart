@@ -69,7 +69,7 @@ public class InGameUI : MonoBehaviour
         dartManager.SpawnDart(0, 
             playPanel.transform.position + Vector3.down * (_screenWidth * _playPanelRatio) / 2);
     }
-    
+
     public void HandleStageLevelChanged(int stageLevel)
     {
         targetManager.StageLevel = stageLevel;

@@ -48,6 +48,24 @@ public class DartManager : Singleton<DartManager>
             inGameUI.inGameCards[i].GetComponent<Image>().sprite = templateDart.darts[_dartTypes[i]].cardImageSprite;
         }
     }
+    public void SetStartCards() // 게임 시작 시 고정 다트 1개와 랜덤 다트 4개를 선택
+    {
+        _isUsedType[0] = true;
+        _dartTypes[0] = 0;
+        inGameUI.startCards[0].GetComponent<Image>().sprite = templateDart.darts[0].cardImageSprite;
+        for (int i = 1; i < 4; i++)
+        {
+            int curDartType;
+            while (true)
+            {
+                curDartType = Random.Range(1, _allDartsCnt);
+                if (!_isUsedType[curDartType]) break;
+            }
+            _isUsedType[curDartType] = true;
+            _dartTypes[i] = curDartType;
+            inGameUI.startCards[i].GetComponent<Image>().sprite = templateDart.darts[curDartType].cardImageSprite;
+        }
+    }
     public void SelectCardToReroll(int selectIdx)
     {
         RectTransform rectTransform = inGameUI.startCards[selectIdx].GetComponent<RectTransform>();
