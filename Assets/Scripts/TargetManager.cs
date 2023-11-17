@@ -14,7 +14,7 @@ public class TargetManager : Singleton<TargetManager>
     
     private GameObject[] _targets = new GameObject[8];
     private Target[] _targetComponents = new Target[8]; // target : 8개
-    private int _stageLevel;
+    private int _stageLevel = 1;
     private bool _isGameOver;
 
     public int StageLevel
@@ -90,7 +90,13 @@ public class TargetManager : Singleton<TargetManager>
             {
                 IsGameOver = true;
             }
-            
         }
+
+        for (int i = 0; i < 8; i++)
+        {
+            if (_targetComponents[i].TargetHp > 0) return;
+        }
+
+        StageLevel += 1;
     }
 }
