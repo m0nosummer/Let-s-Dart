@@ -1491,9 +1491,10 @@ GameObject:
   m_Component:
   - component: {fileID: 415599814}
   - component: {fileID: 415599813}
+  - component: {fileID: 415599815}
+  - component: {fileID: 415599816}
   - component: {fileID: 415599812}
   - component: {fileID: 415599811}
-  - component: {fileID: 415599815}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Canvas
@@ -1618,6 +1619,30 @@ MonoBehaviour:
   dartManager: {fileID: 24230691}
   selectCardsPanel: {fileID: 1029633011}
   mainCamera: {fileID: 519420031}
+--- !u!114 &415599816
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 415599810}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1b743b044bc093d4c8618550db436f0b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  textStageLevel: {fileID: 331927077}
+  textCurScore: {fileID: 1144427963}
+  textTargetHps:
+  - {fileID: 1427641593}
+  - {fileID: 646435117}
+  - {fileID: 1296388320}
+  - {fileID: 1159700921}
+  - {fileID: 2059482547}
+  - {fileID: 1495679486}
+  - {fileID: 1162453859}
+  - {fileID: 489966262}
+  targetManager: {fileID: 134681667}
 --- !u!1 &489966260
 GameObject:
   m_ObjectHideFlags: 0

@@ -68,7 +68,7 @@ public class Dart : MonoBehaviour
     {
         StopCoroutine(nameof(MoveUp));
         if (!collision.CompareTag("Target")) return;
-         CurTargetCollisionIdx = collision.GetComponent<Target>().TargetIdx;
+        CurTargetCollisionIdx = collision.GetComponent<Target>().TargetIdx;
         IsCollide = true;
     }
 

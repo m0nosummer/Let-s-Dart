@@ -72,7 +72,6 @@ public class InGameUI : MonoBehaviour
 
     public void HandleStageLevelChanged(int stageLevel)
     {
-        targetManager.StageLevel = stageLevel;
         targetManager.SetTargetHp(targetManager.StageLevel);
         // TODO : UI Text 변경
     }

@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using TMPro;
 using UnityEngine;
 using Random = UnityEngine.Random;
@@ -17,6 +18,10 @@ public class TargetManager : Singleton<TargetManager>
     private int _stageLevel = 1;
     private bool _isGameOver;
 
+    public Target[] TargetComponents
+    {
+        get => _targetComponents;
+    }
     public int StageLevel
     {
         get => _stageLevel;
@@ -59,16 +64,21 @@ public class TargetManager : Singleton<TargetManager>
     {
         _stageLevel = curStageLevel;
         int[] tmpHp = new int[8];
-        while (true)
+        List<int> targetIdxList = new List<int> {0, 1, 2, 3, 4, 5, 6, 7};
+        int totalHpLeft = _stageLevel;
+        int curTargetCnt = 1;
+        
+        ShuffleList(targetIdxList);
+        Debug.Log(string.Join(", ", targetIdxList));
+        for (int i = 0; i < 8; i++)
         {
-            int sum = 0;
-            for (int i = 0; i < tmpHp.Length; i++)
-            {
-                tmpHp[i] = Random.Range(0, _stageLevel * 2);
-                sum += tmpHp[i];
-            }
-
-            if (sum == _stageLevel) break;
+            int curIdx = targetIdxList[i];
+            int maxHpRange = (totalHpLeft > 0) ? totalHpLeft / 4 + 2 : 1;
+            
+            if (i == 7) tmpHp[curIdx] = totalHpLeft;
+            else        tmpHp[curIdx] = Random.Range(0, maxHpRange);
+            Debug.Log(tmpHp[curIdx] + " " + totalHpLeft);
+            totalHpLeft -= tmpHp[curIdx];
         }
 
         for (int i = 0; i < tmpHp.Length; i++)
@@ -80,6 +90,16 @@ public class TargetManager : Singleton<TargetManager>
         }
     }
 
+    private void ShuffleList<T>(List<T> list)
+    {
+        int n = list.Count;
+        
+        for (int i = n - 1; i > 0; i--)
+        {
+            int j = Random.Range(0, i + 1);
+            (list[i], list[j]) = (list[j], list[i]);
+        }
+    } // Knuth Shuffle
     public void DamageTarget(int curTargetIdx, int dartAttack, int dartRange)
     {
         int range = (dartRange - 1) / 2;

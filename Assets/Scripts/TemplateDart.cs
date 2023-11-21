@@ -16,6 +16,6 @@ public class TemplateDart : ScriptableObject
         public Sprite dartImageSprite;
         public int damage;
         public int range;
-
+        public int score;
     }
 }
