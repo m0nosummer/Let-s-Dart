@@ -63,13 +63,15 @@ public class TargetManager : Singleton<TargetManager>
     public void SetTargetHp(int curStageLevel) // 합 = StageLevel이 되도록 8개의 칸에 HP 배분
     {
         _stageLevel = curStageLevel;
-        int[] tmpHp = new int[8];
+        
         List<int> targetIdxList = new List<int> {0, 1, 2, 3, 4, 5, 6, 7};
+        
+        int[] tmpHp = new int[8];
         int totalHpLeft = _stageLevel;
         int curTargetCnt = 1;
         
         ShuffleList(targetIdxList);
-        Debug.Log(string.Join(", ", targetIdxList));
+        
         for (int i = 0; i < 8; i++)
         {
             int curIdx = targetIdxList[i];
@@ -77,7 +79,6 @@ public class TargetManager : Singleton<TargetManager>
             
             if (i == 7) tmpHp[curIdx] = totalHpLeft;
             else        tmpHp[curIdx] = Random.Range(0, maxHpRange);
-            Debug.Log(tmpHp[curIdx] + " " + totalHpLeft);
             totalHpLeft -= tmpHp[curIdx];
         }
 
