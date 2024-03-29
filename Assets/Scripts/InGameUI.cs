@@ -16,7 +16,8 @@ public class InGameUI : MonoBehaviour
     [SerializeField] private DartManager dartManager;
     [SerializeField] private GameObject selectCardsPanel;
     [SerializeField] private Camera mainCamera;
-    
+
+    private float stageTime;
     private float _screenWidth;
     private float _screenHeight;
     private float _playPanelRatio;
